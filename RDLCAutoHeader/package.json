@@ -2,14 +2,18 @@
   "name": "rdlc-autoheader",
   "displayName": "RDLC Auto Header Pro",
   "description": "Automatización mágica para Business Central: Inyecta SetData/GetData en informes RDLC con un solo clic.",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "author": "AlvaroRobles",
   "publisher": "b3325c32-f6ee-4fad-9894-9af09cca5946",
   "icon": "icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AlvaroRobles/business-central-rdlc-autoheader"
+    "url": "https://github.com/roblesgg/business-central-rdlc-autoheader"
   },
+  "bugs": {
+    "url": "https://github.com/roblesgg/business-central-rdlc-autoheader/issues"
+  },
+  "homepage": "https://github.com/roblesgg/business-central-rdlc-autoheader#readme",
   "engines": {
     "vscode": "^1.80.0"
   },
