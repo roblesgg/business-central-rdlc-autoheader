@@ -320,7 +320,7 @@ function getWebviewContent(activeTab: string = 'automation') {
     </div>
 
     <h1>RDLC Auto Header PRO</h1>
-    <div class="credits">Enterprise Edition • v1.7.0</div>
+    <div class="credits">Enterprise Edition • v1.7.1</div>
 
     <div id="info" class="content ${activeTab === 'info' ? 'active' : ''}" style="font-size: 11px; line-height: 1.5; color: var(--text-dim);">
         <div class="card">
