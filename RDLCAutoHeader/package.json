@@ -2,9 +2,9 @@
   "name": "rdlc-autoheader",
   "displayName": "RDLC Auto Header Pro",
   "description": "Automatización mágica para Business Central: Inyecta SetData/GetData en informes RDLC con un solo clic.",
-  "version": "1.6.3",
-  "author": "Alvaro Robles",
-  "publisher": "AlvaroRobles",
+  "version": "1.7.0",
+  "author": "AlvaroRobles",
+  "publisher": "b3325c32-f6ee-4fad-9894-9af09cca5946",
   "icon": "icon.png",
   "repository": {
     "type": "git",

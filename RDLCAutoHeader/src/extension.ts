@@ -213,8 +213,8 @@ async function handleProcessing(filePaths: string[], useModSuffix: boolean, grou
             
             let shouldOpen = defaultOpen;
             if (askToOpen) {
-                const answer = await vscode.window.showInformationMessage(`¿Quieres abrir el archivo procesado? (${path.basename(newPath)})`, 'Sí', 'No');
-                shouldOpen = (answer === 'Sí');
+                const answer = await vscode.window.showInformationMessage(`¿Quieres abrir el archivo procesado? / Do you want to open the processed file? (${path.basename(newPath)})`, 'Sí / Yes', 'No');
+                shouldOpen = (answer === 'Sí / Yes');
             }
 
             if (shouldOpen) {
@@ -226,7 +226,7 @@ async function handleProcessing(filePaths: string[], useModSuffix: boolean, grou
             webview.postMessage({ command: 'log', text: `\n[ERROR] ${path.basename(filePath)}: ${e.message}\n`, status: 'error' });
         }
     }
-    webview.postMessage({ command: 'log', text: `\n[INFO] PROCESAMIENTO FINALIZADO.\n`, status: 'success' });
+    webview.postMessage({ command: 'log', text: `\n[INFO] PROCESAMIENTO FINALIZADO / PROCESSING FINISHED.\n`, status: 'success' });
 }
 
 function getWebviewContent(activeTab: string = 'automation') {
@@ -314,59 +314,49 @@ function getWebviewContent(activeTab: string = 'automation') {
 </head>
 <body>
     <div class="tabs">
-        <div id="tab-auto" class="tab ${activeTab === 'automation' ? 'active' : ''}" onclick="showTab('automation')">Automatización</div>
-        <div id="tab-settings" class="tab ${activeTab === 'settings' ? 'active' : ''}" onclick="showTab('settings')">Ajustes</div>
-        <div id="tab-info" class="tab ${activeTab === 'info' ? 'active' : ''}" onclick="showTab('info')">Instrucciones</div>
+        <div id="tab-auto" class="tab ${activeTab === 'automation' ? 'active' : ''}" onclick="showTab('automation')">Automatización / Automation</div>
+        <div id="tab-settings" class="tab ${activeTab === 'settings' ? 'active' : ''}" onclick="showTab('settings')">Ajustes / Settings</div>
+        <div id="tab-info" class="tab ${activeTab === 'info' ? 'active' : ''}" onclick="showTab('info')">Info</div>
     </div>
 
     <h1>RDLC Auto Header PRO</h1>
-    <div class="credits">Enterprise Edition • v1.6.3</div>
+    <div class="credits">Enterprise Edition • v1.7.0</div>
 
     <div id="info" class="content ${activeTab === 'info' ? 'active' : ''}" style="font-size: 11px; line-height: 1.5; color: var(--text-dim);">
         <div class="card">
-            <div class="card-title">EL DESAFÍO TÉCNICO</div>
-            <p>En informes de <b>Business Central</b> con múltiples páginas (como facturas masivas), el motor de RDLC pierde la referencia de los datos en el encabezado al cambiar de documento. Esto provoca que el encabezado muestre datos del primer registro en todas las páginas.</p>
+            <div class="card-title">EL DESAFÍO / THE CHALLENGE</div>
+            <p>En informes de <b>Business Central</b> con múltiples páginas, el motor RDLC pierde la referencia del encabezado al cambiar de documento. / In <b>Business Central</b> reports with multiple pages, the RDLC engine loses header reference when changing documents.</p>
         </div>
 
         <div class="card">
-            <div class="card-title">LA SOLUCIÓN: SETDATA / GETDATA</div>
-            <p>Esta extensión implementa el patrón de diseño estándar de la industria para persistencia de datos en encabezados:</p>
-            <ol style="padding-left: 15px;">
-                <li><b>Inyección de Código:</b> Se añade un bloque VB.NET global con funciones de diccionario (Set/Get).</li>
-                <li><b>Serialización:</b> Los campos del encabezado se transforman en llamadas <code>Code.GetData(index, 1)</code>.</li>
-                <li><b>Master Tablix:</b> Se crea un elemento invisible en el cuerpo que invoca <code>Code.SetData</code> en cada cambio de grupo, sincronizando el encabezado en tiempo real.</li>
-            </ol>
-        </div>
-
-        <div class="card">
-            <div class="card-title">GUÍA DE USO PROFESIONAL</div>
+            <div class="card-title">LA SOLUCIÓN / THE SOLUTION</div>
+            <p>Esta extensión implementa el patrón <b>SetData / GetData</b> automáticamente. / This extension implements the <b>SetData / GetData</b> pattern automatically.</p>
             <ul style="padding-left: 15px;">
-                <li><b>Detección:</b> Use el botón de escaneo para localizar todos los informes del proyecto.</li>
-                <li><b>Validación:</b> Marque solo los informes que requieran corrección de encabezado.</li>
-                <li><b>Ejecución:</b> El proceso es atómico; se crea una copia <code>_MOD</code> o se sobrescribe según su configuración.</li>
+                <li>Inyecta código VB.NET / Injects VB.NET code.</li>
+                <li>Serializa campos del encabezado / Serializes header fields.</li>
+                <li>Crea Master Tablix de sincronización / Creates synchronization Master Tablix.</li>
             </ul>
         </div>
 
         <div style="text-align: center; margin-top: 20px; opacity: 0.8; font-size: 9px;">
-            Desarrollado por <b>Alvaro Robles</b><br>
-            Agradecimientos: <b>Junpeng Jin</b> (Testing & QA)
+            By <b><a href="https://github.com/roblesgg" style="color:var(--accent)">Alvaro Robles</a></b> • Thanks to <b>Junpeng Jin</b>
         </div>
     </div>
 
     <div id="automation" class="content ${activeTab === 'automation' ? 'active' : ''}">
         <div id="dropZone" class="drop-zone">
-            <div style="font-size: 16px; font-weight: 800; margin-bottom: 5px;">AÑADIR RDLC</div>
-            <div style="font-size: 9px; opacity: 0.7;">o arrastrar archivos aquí</div>
+            <div style="font-size: 16px; font-weight: 800; margin-bottom: 5px;">AÑADIR / ADD RDLC</div>
+            <div style="font-size: 9px; opacity: 0.7;">arrastrar archivos / drag files</div>
         </div>
         
-        <button class="btn" id="btnDetect" style="background-color: var(--card); color: var(--accent); border: 1px solid var(--accent); margin-top: -5px; margin-bottom: 15px;">DETECTAR TODOS EN PROYECTO</button>
+        <button class="btn" id="btnDetect" style="background-color: var(--card); color: var(--accent); border: 1px solid var(--accent); margin-top: -5px; margin-bottom: 15px;">DETECTAR TODOS / SCAN ALL</button>
         
         <div class="file-list" id="fileList"></div>
         
 
 
-        <button class="btn btn-run" id="btnRun">INICIAR PROCESO</button>
-        <div class="log-box" id="logBox">Listo para procesar...</div>
+        <button class="btn btn-run" id="btnRun">INICIAR / START</button>
+        <div class="log-box" id="logBox">Ready...</div>
     </div>
 
     <div id="settings" class="content ${activeTab === 'settings' ? 'active' : ''}">
@@ -374,8 +364,8 @@ function getWebviewContent(activeTab: string = 'automation') {
             <div class="card-title">Interacción</div>
             <div class="setting-row">
                 <div class="setting-info">
-                    <span class="setting-label">Preguntar Sufijo</span>
-                    <span class="setting-desc">¿Preguntar siempre por _MOD?</span>
+                    <span class="setting-label">Preguntar Sufijo / Ask Suffix</span>
+                    <span class="setting-desc">¿Preguntar por _MOD? / Always ask?</span>
                 </div>
                 <label class="switch">
                     <input type="checkbox" id="setAskSuffix" ${askForSuffix ? 'checked' : ''}>
@@ -384,8 +374,8 @@ function getWebviewContent(activeTab: string = 'automation') {
             </div>
             <div class="setting-row" style="${askForSuffix ? 'opacity: 0.4; pointer-events: none;' : ''}">
                 <div class="setting-info">
-                    <span class="setting-label">Usar Sufijo</span>
-                    <span class="setting-desc">Valor por defecto si no se pregunta</span>
+                    <span class="setting-label">Usar Sufijo / Use Suffix</span>
+                    <span class="setting-desc">Valor defecto / Default value</span>
                 </div>
                 <label class="switch">
                     <input type="checkbox" id="setDefaultSuffix" ${defaultUseSuffix ? 'checked' : ''} ${askForSuffix ? 'disabled' : ''}>
@@ -395,8 +385,8 @@ function getWebviewContent(activeTab: string = 'automation') {
             
             <div class="setting-row" style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;">
                 <div class="setting-info">
-                    <span class="setting-label">Preguntar Abrir</span>
-                    <span class="setting-desc">¿Preguntar si abrir al finalizar?</span>
+                    <span class="setting-label">Preguntar Abrir / Ask Open</span>
+                    <span class="setting-desc">¿Preguntar al terminar? / Ask when done?</span>
                 </div>
                 <label class="switch">
                     <input type="checkbox" id="setAskOpen" ${askToOpen ? 'checked' : ''}>
@@ -405,8 +395,8 @@ function getWebviewContent(activeTab: string = 'automation') {
             </div>
             <div class="setting-row" style="${askToOpen ? 'opacity: 0.4; pointer-events: none;' : ''}">
                 <div class="setting-info">
-                    <span class="setting-label">Abrir al terminar</span>
-                    <span class="setting-desc">Abrir automáticamente el archivo</span>
+                    <span class="setting-label">Abrir al terminar / Open when done</span>
+                    <span class="setting-desc">Abrir archivo / Auto open file</span>
                 </div>
                 <label class="switch">
                     <input type="checkbox" id="setDefaultOpen" ${defaultOpen ? 'checked' : ''} ${askToOpen ? 'disabled' : ''}>
@@ -416,11 +406,11 @@ function getWebviewContent(activeTab: string = 'automation') {
         </div>
 
         <div class="card">
-            <div class="card-title">Estructura Master</div>
+            <div class="card-title">Estructura / Master Structure</div>
             <div class="setting-row">
                 <div class="setting-info">
-                    <span class="setting-label">Preguntar Agrupación</span>
-                    <span class="setting-desc">¿Preguntar por tabla Master?</span>
+                    <span class="setting-label">Preguntar Agrupación / Ask Group</span>
+                    <span class="setting-desc">¿Preguntar tabla Master? / Ask for Master?</span>
                 </div>
                 <label class="switch">
                     <input type="checkbox" id="setAskGroup" ${askForGrouping ? 'checked' : ''}>
@@ -429,8 +419,8 @@ function getWebviewContent(activeTab: string = 'automation') {
             </div>
             <div class="setting-row" style="${askForGrouping ? 'opacity: 0.4; pointer-events: none;' : ''}">
                 <div class="setting-info">
-                    <span class="setting-label">Agrupar Body</span>
-                    <span class="setting-desc">Valor por defecto si no se pregunta</span>
+                    <span class="setting-label">Agrupar Body / Group Body</span>
+                    <span class="setting-desc">Valor defecto / Default value</span>
                 </div>
                 <label class="switch">
                     <input type="checkbox" id="setDefaultGroup" ${defaultGroupBody ? 'checked' : ''} ${askForGrouping ? 'disabled' : ''}>
@@ -440,34 +430,34 @@ function getWebviewContent(activeTab: string = 'automation') {
         </div>
 
         <div class="card">
-            <div class="card-title">Estética</div>
+            <div class="card-title">Estética / Appearance</div>
             <div class="setting-row">
                 <div class="setting-info">
-                    <span class="setting-label">Color del inyector</span>
-                    <span class="setting-desc">Color del cuadrado de SetData</span>
+                    <span class="setting-label">Color inyector / Injector color</span>
+                    <span class="setting-desc">Color SetData square</span>
                 </div>
                 <input type="color" id="setColor" value="${rectColor}">
             </div>
         </div>
 
         <div class="card">
-            <div class="card-title">Avanzado</div>
+            <div class="card-title">Avanzado / Advanced</div>
             <div class="setting-row">
                 <div class="setting-info">
-                    <span class="setting-label">Ubicación Salto Página</span>
-                    <span class="setting-desc">¿Dónde saltar página en Master?</span>
+                    <span class="setting-label">Salto Página / Page Break</span>
+                    <span class="setting-desc">Location in Master Tablix</span>
                 </div>
                 <select id="setPageBreak" style="background: #45475A; color: white; border: none; padding: 4px; border-radius: 4px; font-size: 11px;">
-                    <option value="None" ${pageBreakLocation === 'None' ? 'selected' : ''}>Ninguno</option>
-                    <option value="Start" ${pageBreakLocation === 'Start' ? 'selected' : ''}>Inicio</option>
-                    <option value="End" ${pageBreakLocation === 'End' ? 'selected' : ''}>Fin</option>
-                    <option value="Between" ${pageBreakLocation === 'Between' ? 'selected' : ''}>Entre</option>
+                    <option value="None" ${pageBreakLocation === 'None' ? 'selected' : ''}>None / Ninguno</option>
+                    <option value="Start" ${pageBreakLocation === 'Start' ? 'selected' : ''}>Start / Inicio</option>
+                    <option value="End" ${pageBreakLocation === 'End' ? 'selected' : ''}>End / Fin</option>
+                    <option value="Between" ${pageBreakLocation === 'Between' ? 'selected' : ''}>Between / Entre</option>
                 </select>
             </div>
             <div class="setting-row">
                 <div class="setting-info">
-                    <span class="setting-label">Limpiar Expresiones</span>
-                    <span class="setting-desc">Quitar First() automáticamente</span>
+                    <span class="setting-label">Limpiar / Clean Expressions</span>
+                    <span class="setting-desc">Auto-remove First()</span>
                 </div>
                 <label class="switch">
                     <input type="checkbox" id="setCleanExpr" ${cleanExpressions ? 'checked' : ''}>
@@ -476,8 +466,8 @@ function getWebviewContent(activeTab: string = 'automation') {
             </div>
             <div class="setting-row">
                 <div class="setting-info">
-                    <span class="setting-label">DataSet Principal</span>
-                    <span class="setting-desc">Nombre del DataSet del informe</span>
+                    <span class="setting-label">DataSet Principal / Primary DS</span>
+                    <span class="setting-desc">Report DataSet name</span>
                 </div>
                 <input type="text" id="setPrimaryDS" value="${primaryDataSet}" style="background: #45475A; color: white; border: none; padding: 4px; border-radius: 4px; font-size: 11px; width: 80px;">
             </div>
