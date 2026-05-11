@@ -54,4 +54,4 @@ Desarrollado por **[Alvaro Robles](https://github.com/roblesgg)** ([LinkedIn](ht
 *   **[Junpeng Jin](https://www.linkedin.com/in/junpeng-jin-9587832b4/)**: Por su exhaustivo testing, QA y feedback fundamental para convertir esta herramienta en una solución de nivel Enterprise.
 
 ---
-*Enterprise Edition • v1.6.3*
+*Enterprise Edition • v1.7.0*
