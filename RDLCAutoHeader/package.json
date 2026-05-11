@@ -1,0 +1,141 @@
+{
+  "name": "rdlc-autoheader",
+  "displayName": "RDLC Auto Header Pro",
+  "description": "Automatización mágica para Business Central: Inyecta SetData/GetData en informes RDLC con un solo clic.",
+  "version": "1.6.3",
+  "author": "Alvaro Robles",
+  "publisher": "AlvaroRobles",
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alvaro/rdlcautoheader"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:rdlcautoheader.processReport",
+    "onView:rdlcAutoHeaderSidebar"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "RDLC Auto Header",
+      "properties": {
+        "rdlcAutoHeader.rectColor": {
+          "type": "string",
+          "default": "Red",
+          "description": "Color de fondo para el rectángulo inyector de SetData (ej. Red, #FF0000, Blue, transparent)."
+        },
+        "rdlcAutoHeader.askForSuffix": {
+          "type": "boolean",
+          "default": true,
+          "description": "Si está activado, preguntará siempre si añadir el sufijo _MOD."
+        },
+        "rdlcAutoHeader.defaultUseSuffix": {
+          "type": "boolean",
+          "default": true,
+          "description": "Valor por defecto para el sufijo si 'askForSuffix' está desactivado."
+        },
+        "rdlcAutoHeader.askForGrouping": {
+          "type": "boolean",
+          "default": true,
+          "description": "Si está activado, preguntará siempre si agrupar el cuerpo en una tabla."
+        },
+        "rdlcAutoHeader.defaultGroupBody": {
+          "type": "boolean",
+          "default": false,
+          "description": "Valor por defecto para la agrupación si 'askForGrouping' está desactivado."
+        },
+        "rdlcAutoHeader.pageBreakLocation": {
+          "type": "string",
+          "enum": ["None", "Start", "End", "Between"],
+          "default": "End",
+          "description": "Ubicación del salto de página en la agrupación Master."
+        },
+        "rdlcAutoHeader.cleanExpressions": {
+          "type": "boolean",
+          "default": true,
+          "description": "Si está activado, elimina automáticamente funciones como First() de las expresiones de cabecera."
+        },
+        "rdlcAutoHeader.primaryDataSet": {
+          "type": "string",
+          "default": "DataSet_Result",
+          "description": "Nombre del DataSet principal si el informe tiene varios."
+        },
+        "rdlcAutoHeader.askToOpen": {
+          "type": "boolean",
+          "default": true,
+          "description": "Si está activado, preguntará siempre si abrir el archivo al finalizar."
+        },
+        "rdlcAutoHeader.defaultOpen": {
+          "type": "boolean",
+          "default": false,
+          "description": "Valor por defecto para abrir el archivo si 'askToOpen' está desactivado."
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "rdlcAutoHeaderView",
+          "title": "RDLC Auto Header",
+          "icon": "sidebar-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "rdlcAutoHeaderView": [
+        {
+          "type": "webview",
+          "id": "rdlcAutoHeaderSidebar",
+          "name": "Panel de Control"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "rdlcautoheader.processReport",
+        "title": "Ejecutar RDLC Auto Header"
+      },
+      {
+        "command": "rdlcautoheader.openSettings",
+        "title": "Abrir Ajustes",
+        "icon": "$(settings-gear)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "rdlcautoheader.openSettings",
+          "group": "navigation",
+          "when": "view == rdlcAutoHeaderSidebar"
+        }
+      ],
+      "explorer/context": [
+        {
+          "when": "resourceExtname == .rdlc",
+          "command": "rdlcautoheader.processReport",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "npx @vscode/vsce package"
+  },
+  "dependencies": {
+    "@xmldom/xmldom": "^0.8.10"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "@types/node": "^18.0.0",
+    "typescript": "^5.1.3"
+  }
+}
